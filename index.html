@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Face Mask Detection</title>
+
+
+<!-- Google Font -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+
+<!-- Font Awesome -->
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+<style>
+
+/* ==============================
+   RESET
+============================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+/* ==============================
+   BODY
+============================== */
+
+body{
+
+    background:
+    linear-gradient(
+        135deg,
+        #07152c,
+        #0d3b66,
+        #0a9396
+    );
+
+    background-size:400% 400%;
+
+    animation:bgMove 15s infinite;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+    overflow-x:hidden;
+
+    overflow-y:auto;
+
+    padding:40px 0;
+
+    position:relative;
+
+}
+
+
+/* ==============================
+   BACKGROUND ANIMATION
+============================== */
+
+@keyframes bgMove{
+
+    0%{
+
+        background-position:0% 50%;
+
+    }
+
+    50%{
+
+        background-position:100% 50%;
+
+    }
+
+    100%{
+
+        background-position:0% 50%;
+
+    }
+
+}
+
+
+body::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:400px;
+
+    height:400px;
+
+    background:#00d4ff;
+
+    border-radius:50%;
+
+    top:-120px;
+
+    left:-120px;
+
+    filter:blur(130px);
+
+    opacity:.28;
+
+}
+
+
+body::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    background:#00ff99;
+
+    bottom:-120px;
+
+    right:-120px;
+
+    border-radius:50%;
+
+    filter:blur(120px);
+
+    opacity:.20;
+
+}
+
+
+/* ==============================
+   MAIN CONTAINER
+============================== */
+
+.container{
+
+    width:92%;
+
+    max-width:900px;
+
+    margin:40px auto;
+
+    background:rgba(255,255,255,.10);
+
+    backdrop-filter:blur(22px);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    border-radius:28px;
+
+    padding:40px;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.35);
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+/* ==============================
+   FADE ANIMATION
+============================== */
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ==============================
+   LOGO
+============================== */
+
+.logo{
+
+    width:90px;
+
+    height:90px;
+
+    margin:0 auto 18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff99
+    );
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:42px;
+
+    color:white;
+
+    box-shadow:
+    0 0 40px rgba(0,255,170,.5);
+
+}
+
+
+/* ==============================
+   TITLE
+============================== */
+
+h1{
+
+    text-align:center;
+
+    color:white;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+
+.subtitle{
+
+    text-align:center;
+
+    color:#d8e8ff;
+
+    margin-bottom:35px;
+
+    font-size:15px;
+
+}
+
+
+/* ==============================
+   UPLOAD BOX
+============================== */
+
+.upload-box{
+
+    display:block;
+
+    border:
+    2px dashed
+    rgba(255,255,255,.35);
+
+    border-radius:20px;
+
+    padding:35px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.4s;
+
+    background:
+    rgba(255,255,255,.05);
+
+}
+
+
+.upload-box:hover{
+
+    border-color:#00ffd5;
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 0 30px rgba(0,255,200,.25);
+
+}
+
+
+.upload-box i{
+
+    font-size:60px;
+
+    color:#00ffe7;
+
+    margin-bottom:18px;
+
+}
+
+
+.upload-box h3{
+
+    color:white;
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+}
+
+
+.upload-box p{
+
+    color:#d0d7e6;
+
+    font-size:14px;
+
+}
+
+
+input[type=file]{
+
+    display:none;
+
+}
+
+
+/* ==============================
+   IMAGE PREVIEW
+============================== */
+
+.preview{
+
+    margin-top:30px;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+
+.image-container{
+
+    position:relative;
+
+    display:inline-block;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+}
+
+
+.image-container img{
+
+    width:320px;
+
+    max-width:100%;
+
+    height:auto;
+
+    display:none;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 12px 35px rgba(0,0,0,.45);
+
+}
+
+
+/* ==============================
+   AI SCAN LINE
+============================== */
+
+.scan-line{
+
+    position:absolute;
+
+    top:-100%;
+
+    left:0;
+
+    width:100%;
+
+    height:6px;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        #00ffd5,
+        white,
+        #00ffd5,
+        transparent
+    );
+
+    opacity:0;
+
+    box-shadow:
+    0 0 25px #00ffd5;
+
+    pointer-events:none;
+
+}
+
+
+.scanning{
+
+    animation:
+    scanAnimation 2s linear infinite;
+
+    opacity:1;
+
+}
+
+
+@keyframes scanAnimation{
+
+    0%{
+
+        top:-5%;
+
+    }
+
+    100%{
+
+        top:100%;
+
+    }
+
+}
+
+
+/* ==============================
+   ANALYZE BUTTON
+============================== */
+
+button{
+
+    margin-top:25px;
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00d2ff,
+        #00ff95
+    );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 15px 35px rgba(0,255,180,.4);
+
+}
+
+
+/* ==============================
+   LOADER
+============================== */
+
+#loaderBox{
+
+    display:none;
+
+    margin-top:30px;
+
+    text-align:center;
+
+    animation:fade .4s;
+
+}
+
+
+/* ==============================
+   SPINNER
+============================== */
+
+.loader-circle{
+
+    margin:auto;
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    border:
+    5px solid
+    rgba(255,255,255,.18);
+
+    border-top:
+    5px solid
+    #00ffd5;
+
+    animation:
+    spin .9s linear infinite;
+
+}
+
+
+@keyframes spin{
+
+    100%{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* ==============================
+   UPLOAD PROGRESS
+============================== */
+
+.progress-container{
+
+    width:100%;
+
+    height:14px;
+
+    margin-top:20px;
+
+    border-radius:25px;
+
+    background:
+    rgba(255,255,255,.15);
+
+    overflow:hidden;
+
+}
+
+
+.upload-progress{
+
+    width:0%;
+
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00bfff,
+        #00ff95
+    );
+
+    transition:
+    width .2s linear;
+
+}
+
+
+/* ==============================
+   STATUS
+============================== */
+
+#statusText{
+
+    margin-top:20px;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:600;
+
+}
+
+
+#progressText{
+
+    margin-top:12px;
+
+    color:#d8e8ff;
+
+    font-size:15px;
+
+}
+
+
+/* ==============================
+   RESULT CARD
+============================== */
+
+.result{
+
+    margin-top:35px;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    display:none;
+
+    animation:fade .6s;
+
+}
+
+
+.result h2{
+
+    text-align:center;
+
+    color:white;
+
+    font-size:28px;
+
+    margin-bottom:15px;
+
+}
+
+
+.result p{
+
+    text-align:center;
+
+    color:#d9e8ff;
+
+    font-size:18px;
+
+    margin-bottom:18px;
+
+}
+
+
+/* ==============================
+   CONFIDENCE BAR
+============================== */
+
+.progress{
+
+    width:100%;
+
+    height:16px;
+
+    background:
+    rgba(255,255,255,.15);
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+}
+
+
+.progress-bar{
+
+    height:100%;
+
+    width:0%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00d2ff,
+        #00ff95
+    );
+
+    transition:
+    width 1.5s ease;
+
+}
+
+
+/* ==============================
+   FOOTER
+============================== */
+
+footer{
+
+    margin-top:35px;
+
+    padding-bottom:20px;
+
+    text-align:center;
+
+    color:#d8e8ff;
+
+    font-size:14px;
+
+    line-height:28px;
+
+}
+
+
+footer i{
+
+    color:#00ffe7;
+
+    margin-right:5px;
+
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media(max-width:768px){
+
+    .container{
+
+        padding:25px;
+
+    }
+
+
+    h1{
+
+        font-size:28px;
+
+    }
+
+
+    .image-container img{
+
+        max-width:220px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+        <i class="fas fa-robot"></i>
+
+    </div>
+
+
+    <!-- TITLE -->
+
+    <h1>
+
+        AI Face Mask Detection
+
+    </h1>
+
+
+    <p class="subtitle">
+
+        Deep Learning • CNN • TensorFlow • Flask
+
+    </p>
+
+
+    <!-- UPLOAD FORM -->
+
+    <form
+        action="/predict"
+        method="POST"
+        enctype="multipart/form-data"
+        id="uploadForm">
+
+
+        <label class="upload-box">
+
+
+            <input
+                type="file"
+                name="file"
+                id="fileInput"
+                accept="image/*"
+                required>
+
+
+            <i class="fas fa-cloud-upload-alt"></i>
+
+
+            <h3>
+
+                Upload Face Image
+
+            </h3>
+
+
+            <p>
+
+                Drag & Drop or Click to Browse
+
+            </p>
+
+
+        </label>
+
+
+        <!-- IMAGE PREVIEW -->
+
+        <div class="preview">
+
+
+            <div class="image-container">
+
+
+                <img id="previewImage">
+
+
+                <div
+                    id="scanEffect"
+                    class="scan-line">
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ANALYZE BUTTON -->
+
+        <button type="submit">
+
+            <i class="fas fa-brain"></i>
+
+            Analyze Image
+
+        </button>
+
+
+    </form>
+
+
+    <!-- LOADING / PROGRESS -->
+
+    <div id="loaderBox">
+
+
+        <div class="loader-circle"></div>
+
+
+        <h3 id="statusText">
+
+            Uploading Image...
+
+        </h3>
+
+
+        <div class="progress-container">
+
+
+            <div
+                class="upload-progress"
+                id="uploadProgress">
+            </div>
+
+
+        </div>
+
+
+        <p id="progressText">
+
+            0%
+
+        </p>
+
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    {% if prediction %}
+
+
+    <div
+        class="result"
+        id="resultCard"
+        style="display:block;">
+
+
+        {% if prediction=="Mask" %}
+
+
+        <h2 style="color:#00ff95;">
+
+            <i class="fas fa-check-circle"></i>
+
+            Face Mask Detected
+
+        </h2>
+
+
+        {% elif prediction=="No Mask" %}
+
+
+        <h2 style="color:#ff5d7d;">
+
+            <i class="fas fa-exclamation-triangle"></i>
+
+            No Face Mask
+
+        </h2>
+
+
+        {% else %}
+
+
+        <h2>
+
+            {{ prediction }}
+
+        </h2>
+
+
+        {% endif %}
+
+
+        <p>
+
+            Confidence :
+
+            <b>{{ confidence }}</b>
+
+        </p>
+
+
+        <div class="progress">
+
+
+            <div
+                class="progress-bar"
+                id="bar"
+                data-confidence="{{ confidence }}">
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    {% endif %}
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        Developed by <b>Ramya Achar</b>
+
+        <br>
+
+
+        <i class="fas fa-microchip"></i>
+        TensorFlow
+
+
+        &nbsp;&nbsp;
+
+
+        <i class="fas fa-eye"></i>
+        OpenCV
+
+
+        &nbsp;&nbsp;
+
+
+        <i class="fab fa-python"></i>
+        Flask
+
+
+        &nbsp;&nbsp;
+
+
+        <i class="fas fa-brain"></i>
+        CNN
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+
+/* ==============================
+   ELEMENTS
+============================== */
+
+const input =
+    document.getElementById("fileInput");
+
+const preview =
+    document.getElementById("previewImage");
+
+const form =
+    document.getElementById("uploadForm");
+
+const loader =
+    document.getElementById("loaderBox");
+
+const progressBar =
+    document.getElementById("uploadProgress");
+
+const progressText =
+    document.getElementById("progressText");
+
+const statusText =
+    document.getElementById("statusText");
+
+const scan =
+    document.getElementById("scanEffect");
+
+
+/* ==============================
+   IMAGE PREVIEW
+============================== */
+
+input.onchange = function(){
+
+    const file = this.files[0];
+
+
+    if(file){
+
+        preview.src =
+            URL.createObjectURL(file);
+
+        preview.style.display =
+            "block";
+
+    }
+
+};
+
+
+/* ==============================
+   UPLOAD + AI SCAN
+============================== */
+
+form.onsubmit = function(){
+
+    loader.style.display =
+        "block";
+
+
+    scan.classList.add(
+        "scanning"
+    );
+
+
+    let value = 0;
+
+
+    progressBar.style.width =
+        "0%";
+
+
+    progressText.innerHTML =
+        "0%";
+
+
+    statusText.innerHTML =
+        "Uploading Image...";
+
+
+    const interval =
+        setInterval(function(){
+
+
+            value += 2;
+
+
+            progressBar.style.width =
+                value + "%";
+
+
+            progressText.innerHTML =
+                value + "%";
+
+
+            if(value < 35){
+
+                statusText.innerHTML =
+                    "Uploading Image...";
+
+            }
+
+            else if(value < 70){
+
+                statusText.innerHTML =
+                    "Preparing AI Model...";
+
+            }
+
+            else{
+
+                statusText.innerHTML =
+                    "Analyzing Face...";
+
+            }
+
+
+            if(value >= 100){
+
+                clearInterval(interval);
+
+            }
+
+
+        },40);
+
+};
+
+
+/* ==============================
+   CONFIDENCE BAR
+============================== */
+
+window.onload = function(){
+
+
+    const bar =
+        document.getElementById("bar");
+
+
+    if(bar){
+
+
+        const confidence =
+            parseFloat(
+                bar.dataset.confidence
+            );
+
+
+        if(!isNaN(confidence)){
+
+
+            setTimeout(function(){
+
+
+                bar.style.width =
+                    confidence + "%";
+
+
+            },300);
+
+        }
+
+    }
+
+};
+
+</script>
+
+
+</body>
+
+</html>
