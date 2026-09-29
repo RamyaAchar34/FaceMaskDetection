@@ -1,7 +1,3 @@
-Absolutely. For your GitHub repository, let's make the README look **professional but still student/project-friendly**.
-
-You can paste the following directly into GitHub's `README.md`:
-
 ````markdown
 # 😷 AI Face Mask Detection
 
