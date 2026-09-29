@@ -3,7 +3,13 @@
 
 An AI-powered web application that detects whether a person is wearing a face mask or not from an uploaded image.
 
-The application is built using **Python, Flask, TensorFlow, OpenCV, HTML, CSS, and JavaScript**.
+Built using **Python, Flask, TensorFlow, OpenCV, HTML, CSS, and JavaScript**.
+
+## 🌐 Live Demo
+
+👉 **[Launch AI Face Mask Detection App](https://facemaskdetection-ym86.onrender.com)**
+
+Upload a face image and get an AI-powered prediction of **Mask** or **No Mask** along with the prediction confidence.
 
 ## 🚀 Features
 
@@ -20,13 +26,51 @@ The application is built using **Python, Flask, TensorFlow, OpenCV, HTML, CSS, a
 
 - Python
 - Flask
-- TensorFlow
+- TensorFlow / Keras
 - OpenCV
 - NumPy
 - HTML5
 - CSS3
 - JavaScript
 - CNN (Convolutional Neural Network)
+- Docker
+- GitHub
+- Render
+
+## 🧠 Model
+
+The application uses a trained **CNN (Convolutional Neural Network)** model for image classification.
+
+**Input:** 200 × 200 pixel image
+
+**Classes:**
+
+| Class | Prediction |
+|---|---|
+| 0 | Mask |
+| 1 | No Mask |
+
+The model processes the uploaded image and returns the predicted class along with its confidence score.
+
+## 🔄 How It Works
+
+```text
+User Uploads Image
+        ↓
+Flask Receives Image
+        ↓
+OpenCV Processes Image
+        ↓
+Image Resized to 200 × 200
+        ↓
+Pixel Normalization
+        ↓
+CNN Model Prediction
+        ↓
+Prediction + Confidence
+        ↓
+Result Displayed on Web Page
+````
 
 ## 📂 Project Structure
 
@@ -46,73 +90,120 @@ FaceMaskDetection/
 ├── check_model.py
 ├── requirements.txt
 ├── Dockerfile
-└── mask_no_mask.h5
-````
+├── mask_no_mask.h5
+├── .gitignore
+├── .gitattributes
+└── README.md
+```
 
-## 🧠 How It Works
+## 📄 File Description
 
-1. The user uploads an image through the web interface.
-2. The image is processed using OpenCV.
-3. The image is resized to **200 × 200 pixels**.
-4. Pixel values are normalized before prediction.
-5. The trained TensorFlow model analyzes the image.
-6. The application predicts:
+| File / Folder          | Description                            |
+| ---------------------- | -------------------------------------- |
+| `app.py`               | Flask application and prediction logic |
+| `mask_no_mask.h5`      | Trained CNN model                      |
+| `check_model.py`       | Model checking utility                 |
+| `requirements.txt`     | Python dependencies                    |
+| `Dockerfile`           | Docker configuration                   |
+| `templates/index.html` | Web page structure                     |
+| `static/style.css`     | Styling and animations                 |
+| `static/script.js`     | Frontend interactions                  |
+| `static/bg.jpg`        | Background image                       |
+| `static/logo.png`      | Application logo                       |
 
-   * **Mask**
-   * **No Mask**
-7. The prediction confidence is displayed on the screen.
+## 💻 Run Locally
 
-## 📊 Model
-
-The trained deep learning model is used to classify images into two categories:
-
-| Class | Prediction |
-| ----- | ---------- |
-| 0     | Mask       |
-| 1     | No Mask    |
-
-## 🌐 Web Application
-
-The application uses **Flask** as the backend framework and provides a simple web interface for uploading images and viewing predictions.
-
-## ▶️ Run Locally
-
-Clone the repository:
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/RamyaAchar34/FaceMaskDetection.git
 ```
 
-Navigate to the project folder:
+### 2. Navigate to the project
 
 ```bash
 cd FaceMaskDetection
 ```
 
-Install the required packages:
+### 3. Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+### 4. Activate the virtual environment
+
+**Windows:**
+
+```bash
+.venv\Scripts\activate
+```
+
+**macOS / Linux:**
+
+```bash
+source .venv/bin/activate
+```
+
+### 5. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the Flask application:
+### 6. Run the application
 
 ```bash
 python app.py
 ```
 
-Open the application in your browser:
+Open:
 
 ```text
 http://127.0.0.1:5000
 ```
 
-## 👩‍💻 Developed By
+## 🐳 Docker
+
+Build the Docker image:
+
+```bash
+docker build -t face-mask-detection .
+```
+
+Run the application:
+
+```bash
+docker run -p 5000:5000 face-mask-detection
+```
+
+Open:
+
+```text
+http://localhost:5000
+```
+
+## ☁️ Deployment
+
+The application is deployed using **Docker and Render**.
+
+🌐 **Live Application:**
+[https://facemaskdetection-ym86.onrender.com](https://facemaskdetection-ym86.onrender.com)
+
+## 👩‍💻 Developer
 
 **Ramya Achar**
 
-Data Science & Analytics | Python | SQL | Power BI | Machine Learning | Deep Learning
+Data Science & Analytics | Python | SQL | Power BI | Tableau | Machine Learning | Deep Learning
 
-## ⭐ Project
+### 🔗 Links
 
-If you find this project useful, feel free to ⭐ the repository.
+* 🌐 [Live Demo](https://facemaskdetection-ym86.onrender.com)
+* 💻 [GitHub Repository](https://github.com/RamyaAchar34/FaceMaskDetection)
+
+---
+
+⭐ If you find this project useful, consider giving it a star on GitHub.
+
+```
+```
